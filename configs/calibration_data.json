@@ -1,0 +1,4 @@
+[
+  {"image_path": "/path/to/image1.jpg", "prompt": "<image>\nWhat is this?"},
+  {"image_path": "/path/to/image2.jpg", "prompt": "<image>\nDescribe the scene."}
+]
