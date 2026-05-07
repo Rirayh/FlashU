@@ -1,11 +1,11 @@
-# FlashU: Plug-and-Play Acceleration for Show-o2
+# Flash-Unified: A Training-Free and Task-Aware Acceleration Framework for Native Unified Models
 
 [![CVPR 2026](https://img.shields.io/badge/CVPR%202026-Findings-blue.svg)](https://arxiv.org/abs/2603.15271)
 [![arXiv](https://img.shields.io/badge/arXiv-2603.15271-b31b1b.svg)](https://arxiv.org/abs/2603.15271)
 
 🎉 **This work has been accepted to Findings of CVPR 2026!** 🎉
 
-FlashU is a **training-free, plug-and-play acceleration framework** for the [Show-o2](https://github.com/showlab/Show-o) unified multimodal model. By applying a simple `apply_flashu_patch()` call, you can achieve **~2x speedup** on text-to-image generation with negligible quality loss.
+FlashU is a **training-free, plug-and-play acceleration framework** for unified multimodal model. By applying a simple `apply_flashu_patch()` call, you can achieve **~2x speedup** on text-to-image generation with negligible quality loss.
 
 ## 🚀 Quick Start 
 
