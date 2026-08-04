@@ -30,7 +30,7 @@ os.environ["TOKENIZERS_PARALLELISM"] = "true"
 import torch
 import torch.nn as nn
 import torch.distributed as dist
-from tqdm import tqdm
+from tqdm.auto import tqdm
 from typing import Dict, List
 from accelerate.logging import get_logger
 from accelerate import PartialState
@@ -155,7 +155,7 @@ class ReconstructionErrorPruner:
         indices_to_process = range(intermediate_size)[state.process_index::state.num_processes]
         
         iterator = tqdm(indices_to_process, desc=f"  Calculating FFN Errors (size={intermediate_size})",
-                        position=1, leave=False, mininterval=2, disable=not state.is_main_process)
+                        leave=False, mininterval=2, dynamic_ncols=True, disable=not state.is_main_process)
         
         for k in iterator:
             setattr(layer.mlp, '_temp_prune_ffn_k', k)
@@ -184,7 +184,7 @@ class ReconstructionErrorPruner:
         indices_to_process = range(num_kv_heads)[state.process_index::state.num_processes]
 
         iterator = tqdm(indices_to_process, desc=f"  Calculating Attn Errors (groups={num_kv_heads})",
-                        position=2, leave=False, mininterval=2, disable=not state.is_main_process)
+                        leave=False, mininterval=2, dynamic_ncols=True, disable=not state.is_main_process)
         
         for k in iterator:
             setattr(layer.self_attn, '_temp_prune_kv_group_k', k)
@@ -219,7 +219,7 @@ class ReconstructionErrorPruner:
 
         layer_iterator = self.llm.model.layers
         if self.state.is_main_process:
-            layer_iterator = tqdm(layer_iterator, desc="Processing Layers", position=0, leave=True)
+            layer_iterator = tqdm(layer_iterator, desc="Processing Layers", leave=True, dynamic_ncols=True)
             
         for layer_idx, layer in enumerate(layer_iterator):
             logger.info(f"[OBD] Starting layer {layer_idx}/27")
