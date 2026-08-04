@@ -154,7 +154,8 @@ class ReconstructionErrorPruner:
         state = self.state
         indices_to_process = range(intermediate_size)[state.process_index::state.num_processes]
         
-        iterator = tqdm(indices_to_process, desc=f"  Calculating FFN Errors (size={intermediate_size})", leave=False, disable=not state.is_main_process)
+        iterator = tqdm(indices_to_process, desc=f"  Calculating FFN Errors (size={intermediate_size})",
+                        position=1, leave=False, mininterval=2, disable=not state.is_main_process)
         
         for k in iterator:
             setattr(layer.mlp, '_temp_prune_ffn_k', k)
@@ -182,7 +183,8 @@ class ReconstructionErrorPruner:
         state = self.state
         indices_to_process = range(num_kv_heads)[state.process_index::state.num_processes]
 
-        iterator = tqdm(indices_to_process, desc=f"  Calculating Attn Errors (groups={num_kv_heads})", leave=False, disable=not state.is_main_process)
+        iterator = tqdm(indices_to_process, desc=f"  Calculating Attn Errors (groups={num_kv_heads})",
+                        position=2, leave=False, mininterval=2, disable=not state.is_main_process)
         
         for k in iterator:
             setattr(layer.self_attn, '_temp_prune_kv_group_k', k)
@@ -217,7 +219,7 @@ class ReconstructionErrorPruner:
 
         layer_iterator = self.llm.model.layers
         if self.state.is_main_process:
-            layer_iterator = tqdm(layer_iterator, desc="Processing Layers")
+            layer_iterator = tqdm(layer_iterator, desc="Processing Layers", position=0, leave=True)
             
         for layer_idx, layer in enumerate(layer_iterator):
             logger.info(f"[OBD] Starting layer {layer_idx}/27")
