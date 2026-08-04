@@ -155,7 +155,7 @@ class ReconstructionErrorPruner:
         indices_to_process = range(intermediate_size)[state.process_index::state.num_processes]
         
         iterator = tqdm(indices_to_process, desc=f"  Calculating FFN Errors (size={intermediate_size})",
-                        leave=False, mininterval=2, dynamic_ncols=True, disable=not state.is_main_process)
+                        leave=False, miniters=2000, dynamic_ncols=True, disable=not state.is_main_process)
         
         for k in iterator:
             setattr(layer.mlp, '_temp_prune_ffn_k', k)
@@ -184,7 +184,7 @@ class ReconstructionErrorPruner:
         indices_to_process = range(num_kv_heads)[state.process_index::state.num_processes]
 
         iterator = tqdm(indices_to_process, desc=f"  Calculating Attn Errors (groups={num_kv_heads})",
-                        leave=False, mininterval=2, dynamic_ncols=True, disable=not state.is_main_process)
+                        leave=False, miniters=1, dynamic_ncols=True, disable=not state.is_main_process)
         
         for k in iterator:
             setattr(layer.self_attn, '_temp_prune_kv_group_k', k)
