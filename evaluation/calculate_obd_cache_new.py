@@ -262,7 +262,8 @@ def main():
     logging.basicConfig(
         level=logging.INFO,
         format="%(asctime)s - [%(levelname)s] - %(message)s",
-        handlers=[logging.FileHandler(log_filename, mode='w'), logging.StreamHandler(sys.stdout)]
+        handlers=[logging.FileHandler(log_filename, mode='w'), logging.StreamHandler(sys.stdout)],
+        force=True,
     )
     
     logger.info(f"Logging configured. Output will be saved to {log_filename}")
