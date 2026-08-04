@@ -220,6 +220,7 @@ class ReconstructionErrorPruner:
             layer_iterator = tqdm(layer_iterator, desc="Processing Layers")
             
         for layer_idx, layer in enumerate(layer_iterator):
+            logger.info(f"[OBD] Starting layer {layer_idx}/27")
             layer_name_str = f"model.layers.{layer_idx}"
             
             layer_input_args = (
@@ -238,6 +239,7 @@ class ReconstructionErrorPruner:
                 obd_scores_map[f"{layer_name_str}.self_attn"] = attn_scores.cpu().tolist()
             
             hidden_states = Y_baseline.detach()
+            logger.info(f"[OBD] Finished layer {layer_idx}/27")
 
         logger.info("Reconstruction error calculation complete.")
         return obd_scores_map
