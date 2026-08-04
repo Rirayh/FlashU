@@ -24,14 +24,25 @@ images = model.t2i_generate(...)
 
 ```bash
 # Clone this repository
-git clone https://github.com/Rirayh/FlashU-Show-o2.git
-cd FlashU-Show-o2
+git clone https://github.com/Nicerova7/FlashU-Lab.git
+cd FlashU-Lab
 
 # Install dependencies (same as Show-o2)
-pip install torch torchvision accelerate transformers einops omegaconf tqdm pillow
+pip install \
+  transformers==4.46.3 \
+  tokenizers==0.20.3 \
+  diffusers==0.30.1 \
+  accelerate \
+  einops \
+  omegaconf \
+  tqdm \
+  pillow \
+  decord
 
 # Download WAN 2.1 VAE weights
-wget https://path/to/Wan2.1_VAE.pth -P .
+wget -c \
+  https://huggingface.co/Wan-AI/Wan2.1-T2V-14B/resolve/main/Wan2.1_VAE.pth \
+  -O Wan2.1_VAE.pth
 ```
 
 **Requirements:**
