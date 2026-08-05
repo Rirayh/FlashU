@@ -147,7 +147,7 @@ class ReconstructionErrorPruner:
 
     @torch.no_grad()
     def _get_ffn_error_scores(self, layer, layer_input_args, Y_baseline) -> torch.Tensor:
-        """Compute L2 reconstruction error for FFN neurons, distributed across all GPUs."""
+        """Compute squared L2 reconstruction error for FFN neurons, distributed across all GPUs."""
         intermediate_size = layer.mlp.gate_proj.out_features
         scores = torch.zeros(intermediate_size, device=self.device, dtype=torch.float32)
         
@@ -160,7 +160,9 @@ class ReconstructionErrorPruner:
         for k in iterator:
             setattr(layer.mlp, '_temp_prune_ffn_k', k)
             Y_pruned_k = layer(*layer_input_args)[0]
-            error = torch.norm(Y_baseline - Y_pruned_k, p=2)
+            diff = Y_baseline.float() - Y_pruned_k.float()
+            per_prompt_error = diff.square().flatten(start_dim=1).sum(dim=1)
+            error = per_prompt_error.mean()
             scores[k] = error.item()
             delattr(layer.mlp, '_temp_prune_ffn_k')
             
@@ -172,7 +174,7 @@ class ReconstructionErrorPruner:
 
     @torch.no_grad()
     def _get_attn_error_scores(self, layer, layer_input_args, Y_baseline) -> torch.Tensor:
-        """Compute L2 reconstruction error for attention KV groups, distributed across all GPUs."""
+        """Compute squared L2 reconstruction error for attention KV groups, distributed across all GPUs."""
         num_kv_heads = layer.self_attn.num_key_value_heads
         scores = torch.zeros(num_kv_heads, device=self.device, dtype=torch.float32)
 
@@ -189,7 +191,9 @@ class ReconstructionErrorPruner:
         for k in iterator:
             setattr(layer.self_attn, '_temp_prune_kv_group_k', k)
             Y_pruned_k = layer(*layer_input_args)[0]
-            error = torch.norm(Y_baseline - Y_pruned_k, p=2)
+            diff = Y_baseline.float() - Y_pruned_k.float()
+            per_prompt_error = diff.square().flatten(start_dim=1).sum(dim=1)
+            error = per_prompt_error.mean()
             scores[k] = error.item()
             delattr(layer.self_attn, '_temp_prune_kv_group_k')
             
@@ -253,6 +257,8 @@ def main():
     
     # Get sample index to process (passed via CLI, e.g. start_sample_index=5)
     start_sample_index = int(config.get("start_sample_index", 0))
+    num_prompts = int(config.get("num_prompts", 1))
+    batch_size = int(config.get("batch_size", num_prompts))
 
     # --- 1. Logging setup ---
     log_dir = config.get("log_dir", "logs_obd_cache")
@@ -271,7 +277,10 @@ def main():
     logger.info(f"Logging configured. Output will be saved to {log_filename}")
     logger.info(f"Process {state.process_index} of {state.num_processes} initialized on device {state.device}.")
     logger.info(f"Config-loaded args (first 5): {list(config.items())[:5]}")
-    logger.info(f"Processing DPG sample index: {start_sample_index}")
+    logger.info(
+        f"Processing {num_prompts} prompt(s) starting at index "
+        f"{start_sample_index}."
+    )
 
     # --- 2. Check cache file ---
     # Cache filename is dynamic based on sample index
@@ -312,68 +321,108 @@ def main():
     if not meta_data_full:
         logger.error(f"Failed to load prompts from {validation_prompts_file}. File is empty or invalid.")
         sys.exit(1)
+
+    if num_prompts <= 0:
+        raise ValueError("num_prompts must be greater than 0")
+    if start_sample_index < 0:
+        raise ValueError("start_sample_index must be greater than or equal to 0")
+
+    end_sample_index = start_sample_index + num_prompts
+    if end_sample_index > len(meta_data_full):
+        raise ValueError(
+            f"Requested prompts [{start_sample_index}:{end_sample_index}], "
+            f"but the dataset contains only {len(meta_data_full)} prompts"
+        )
+
+    selected_prompts = [
+        item['prompt']
+        for item in meta_data_full[start_sample_index:end_sample_index]
+    ]
         
     # Load hyper-parameters using the same logic as inference scripts
     if config.model.showo.add_time_embeds:
         if 'hyper_params' not in locals():
             config.dataset.preprocessing.num_t2i_image_tokens += 1
             hyper_params = list(get_hyper_params(config, text_tokenizer, showo_token_ids))
-            hyper_params.extend([int(config.get("batch_size", 4)), device, weight_type])
+            hyper_params.extend([batch_size, device, weight_type])
             hyper_params = tuple(hyper_params)
     
     if 'hyper_params' not in locals():
         hyper_params = list(get_hyper_params(config, text_tokenizer, showo_token_ids))
-        hyper_params.extend([int(config.get("batch_size", 4)), device, weight_type])
+        hyper_params.extend([batch_size, device, weight_type])
         hyper_params = tuple(hyper_params)
 
     (num_t2i, _, _, max_seq, max_text, latent_dim, patch_sz, lat_w, lat_h, 
      pad, bos, eos, boi, eoi, _, _, img_pad, _, guide_scale, batch_size, device, weight_type) = hyper_params
     
-    batch_size = int(config.get("batch_size", 4))
-
-    sample_batch_for_pruning = None
-    try:
-        logger.info(f"Preparing sample batch for OBD calibration using sample {start_sample_index}...")
-        
-        # Use the prompt at start_sample_index for calibration
-        if start_sample_index >= len(meta_data_full):
-            logger.error(f"Error: start_sample_index ({start_sample_index}) is out of bounds for dataset (size={len(meta_data_full)}).")
-            if state.is_main_process:
-                # Try to gracefully stop other processes
-                dist.barrier()
-            sys.exit(1)
-            
-        logger.info(f"Using prompt from meta_data_full[{start_sample_index}] for calibration.")
-        prompts = [meta_data_full[start_sample_index]['prompt']] * batch_size
-        
-        batch_text_tokens, _, batch_modality_positions, _ = \
-            prepare_gen_input(prompts, text_tokenizer, num_t2i, bos, eos, boi, eoi, pad, img_pad, max_text, device)
-
-        omni_mask_fn = omni_attn_mask(batch_modality_positions)
-        block_mask = create_block_mask(omni_mask_fn, B=batch_size, H=None, Q_LEN=max_seq, KV_LEN=max_seq, device=device)
-
-        sample_batch_for_pruning = {
-            "input_ids": batch_text_tokens,
-            "attention_mask": block_mask
-        }
-        logger.info("Sample batch prepared successfully.")
-    except Exception as e:
-        logger.error(f"Failed to create sample batch for pruning: {e}.", exc_info=True)
-        sys.exit(1)
+    if batch_size <= 0:
+        raise ValueError("batch_size must be greater than 0")
 
     # --- 6. Run Pruner ---
-    logger.info(f"Starting reconstruction error calculation for sample {start_sample_index}...")
+    logger.info(
+        f"Starting reconstruction error calculation for {num_prompts} prompt(s)..."
+    )
     logger.warning("This process will be VERY SLOW and memory-intensive.")
-    
+
     start_time = time.time()
-    
-    pruner = ReconstructionErrorPruner(model, sample_batch_for_pruning)
-    pruner.state = state
-    obd_scores_map = pruner.calculate_obd_scores()
+    score_sums = {}
+    num_scored_prompts = 0
+
+    for batch_start in range(0, num_prompts, batch_size):
+        prompts = selected_prompts[batch_start:batch_start + batch_size]
+        current_batch_size = len(prompts)
+        first_prompt_index = start_sample_index + batch_start
+        last_prompt_index = first_prompt_index + current_batch_size - 1
+
+        try:
+            logger.info(
+                f"Preparing calibration batch for prompt indices "
+                f"{first_prompt_index}-{last_prompt_index}."
+            )
+            batch_text_tokens, _, batch_modality_positions, _ = prepare_gen_input(
+                prompts, text_tokenizer, num_t2i, bos, eos, boi, eoi, pad,
+                img_pad, max_text, device
+            )
+
+            omni_mask_fn = omni_attn_mask(batch_modality_positions)
+            block_mask = create_block_mask(
+                omni_mask_fn, B=current_batch_size, H=None, Q_LEN=max_seq,
+                KV_LEN=max_seq, device=device
+            )
+            calibration_batch = {
+                "input_ids": batch_text_tokens,
+                "attention_mask": block_mask,
+            }
+        except Exception as e:
+            logger.error(f"Failed to create calibration batch: {e}.", exc_info=True)
+            sys.exit(1)
+
+        pruner = ReconstructionErrorPruner(model, calibration_batch)
+        pruner.state = state
+        batch_scores_map = pruner.calculate_obd_scores()
+
+        if state.is_main_process:
+            for score_name, batch_scores in batch_scores_map.items():
+                batch_scores = np.asarray(batch_scores, dtype=np.float64)
+                if score_name not in score_sums:
+                    score_sums[score_name] = np.zeros_like(batch_scores)
+                score_sums[score_name] += batch_scores * current_batch_size
+            num_scored_prompts += current_batch_size
+
+    if state.is_main_process:
+        obd_scores_map = {
+            score_name: (score_sum / num_scored_prompts).tolist()
+            for score_name, score_sum in score_sums.items()
+        }
+    else:
+        obd_scores_map = {}
     
     end_time = time.time()
     if state.is_main_process:
-        logger.info(f"Calculation for sample {start_sample_index} finished in {(end_time - start_time) / 60:.2f} minutes.")
+        logger.info(
+            f"Calculation for {num_scored_prompts} prompt(s) finished in "
+            f"{(end_time - start_time) / 60:.2f} minutes."
+        )
 
     # --- 7. Save to cache ---
     if state.is_main_process:
