@@ -147,7 +147,7 @@ class ReconstructionErrorPruner:
 
     @torch.no_grad()
     def _get_ffn_error_scores(self, layer, layer_input_args, Y_baseline) -> torch.Tensor:
-        """Compute L2 reconstruction error for FFN neurons, distributed across all GPUs."""
+        """Compute squared L2 reconstruction error for FFN neurons, distributed across all GPUs."""
         intermediate_size = layer.mlp.gate_proj.out_features
         scores = torch.zeros(intermediate_size, device=self.device, dtype=torch.float32)
         
@@ -160,7 +160,9 @@ class ReconstructionErrorPruner:
         for k in iterator:
             setattr(layer.mlp, '_temp_prune_ffn_k', k)
             Y_pruned_k = layer(*layer_input_args)[0]
-            error = torch.norm(Y_baseline - Y_pruned_k, p=2)
+            diff = Y_baseline.float() - Y_pruned_k.float()
+            per_prompt_error = diff.square().flatten(start_dim=1).sum(dim=1)
+            error = per_prompt_error.mean()
             scores[k] = error.item()
             delattr(layer.mlp, '_temp_prune_ffn_k')
             
@@ -172,7 +174,7 @@ class ReconstructionErrorPruner:
 
     @torch.no_grad()
     def _get_attn_error_scores(self, layer, layer_input_args, Y_baseline) -> torch.Tensor:
-        """Compute L2 reconstruction error for attention KV groups, distributed across all GPUs."""
+        """Compute squared L2 reconstruction error for attention KV groups, distributed across all GPUs."""
         num_kv_heads = layer.self_attn.num_key_value_heads
         scores = torch.zeros(num_kv_heads, device=self.device, dtype=torch.float32)
 
@@ -189,7 +191,9 @@ class ReconstructionErrorPruner:
         for k in iterator:
             setattr(layer.self_attn, '_temp_prune_kv_group_k', k)
             Y_pruned_k = layer(*layer_input_args)[0]
-            error = torch.norm(Y_baseline - Y_pruned_k, p=2)
+            diff = Y_baseline.float() - Y_pruned_k.float()
+            per_prompt_error = diff.square().flatten(start_dim=1).sum(dim=1)
+            error = per_prompt_error.mean()
             scores[k] = error.item()
             delattr(layer.self_attn, '_temp_prune_kv_group_k')
             
@@ -335,22 +339,29 @@ def main():
     try:
         logger.info(f"Preparing sample batch for OBD calibration using sample {start_sample_index}...")
         
-        # Use the prompt at start_sample_index for calibration
+        # Use distinct prompts starting at start_sample_index for calibration
         if start_sample_index >= len(meta_data_full):
             logger.error(f"Error: start_sample_index ({start_sample_index}) is out of bounds for dataset (size={len(meta_data_full)}).")
             if state.is_main_process:
                 # Try to gracefully stop other processes
                 dist.barrier()
             sys.exit(1)
-            
-        logger.info(f"Using prompt from meta_data_full[{start_sample_index}] for calibration.")
-        prompts = [meta_data_full[start_sample_index]['prompt']] * batch_size
+
+        prompts = [
+            item['prompt']
+            for item in meta_data_full[start_sample_index:start_sample_index + batch_size]
+        ]
+        current_batch_size = len(prompts)
+        logger.info(
+            f"Using {current_batch_size} distinct prompt(s) starting at "
+            f"meta_data_full[{start_sample_index}] for calibration."
+        )
         
         batch_text_tokens, _, batch_modality_positions, _ = \
             prepare_gen_input(prompts, text_tokenizer, num_t2i, bos, eos, boi, eoi, pad, img_pad, max_text, device)
 
         omni_mask_fn = omni_attn_mask(batch_modality_positions)
-        block_mask = create_block_mask(omni_mask_fn, B=batch_size, H=None, Q_LEN=max_seq, KV_LEN=max_seq, device=device)
+        block_mask = create_block_mask(omni_mask_fn, B=current_batch_size, H=None, Q_LEN=max_seq, KV_LEN=max_seq, device=device)
 
         sample_batch_for_pruning = {
             "input_ids": batch_text_tokens,
