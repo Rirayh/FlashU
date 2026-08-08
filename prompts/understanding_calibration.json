@@ -23,5 +23,80 @@
     "image_path": "/content/drive/MyDrive/intership/MME/cat_window.jpg",
     "prompt": "Where is the cat positioned in the image?",
     "source_url": "https://upload.wikimedia.org/wikipedia/commons/c/cf/Cat_looking_through_window.jpg"
+  },
+  {
+    "image_path": "/content/drive/MyDrive/intership/MME/sunflower.jpg",
+    "prompt": "What type of flower is shown in the image?",
+    "source_url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Sunflower.JPG"
+  },
+  {
+    "image_path": "/content/drive/MyDrive/intership/MME/coffee_cup.jpg",
+    "prompt": "What beverage is shown in the cup?",
+    "source_url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Coffee-cup.jpg"
+  },
+  {
+    "image_path": "/content/drive/MyDrive/intership/MME/african_elephant.jpg",
+    "prompt": "What animal is shown in the image?",
+    "source_url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/African_Elephant.jpg"
+  },
+  {
+    "image_path": "/content/drive/MyDrive/intership/MME/red_apple.jpg",
+    "prompt": "What fruit is shown in the image?",
+    "source_url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Red_Apple.jpg"
+  },
+  {
+    "image_path": "/content/drive/MyDrive/intership/MME/stop_sign.jpg",
+    "prompt": "What instruction appears on the traffic sign?",
+    "source_url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Stop_sign_%281%29.jpg"
+  },
+  {
+    "image_path": "/content/drive/MyDrive/intership/MME/airplane.jpg",
+    "prompt": "What type of vehicle is shown at the airport?",
+    "source_url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Airplane_at_airport.jpg"
+  },
+  {
+    "image_path": "/content/drive/MyDrive/intership/MME/mountain.jpg",
+    "prompt": "What natural landform dominates the image?",
+    "source_url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/A_Mountain.JPG"
+  },
+  {
+    "image_path": "/content/drive/MyDrive/intership/MME/clock_tower.jpg",
+    "prompt": "What type of structure is shown in the image?",
+    "source_url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Clock_Tower_of_Thimphu.jpg"
+  },
+  {
+    "image_path": "/content/drive/MyDrive/intership/MME/banana.jpg",
+    "prompt": "What fruit is shown in the image?",
+    "source_url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Banana-Single.jpg"
+  },
+  {
+    "image_path": "/content/drive/MyDrive/intership/MME/horse.jpg",
+    "prompt": "What animal is shown in the image?",
+    "source_url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Horse_007.jpg"
+  },
+  {
+    "image_path": "/content/drive/MyDrive/intership/MME/sailboat.jpg",
+    "prompt": "What kind of vessel is shown on the water?",
+    "source_url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Sailboat%2C_by_J._Henry_Allen.jpg"
+  },
+  {
+    "image_path": "/content/drive/MyDrive/intership/MME/wooden_chair.jpg",
+    "prompt": "What piece of furniture is shown in the image?",
+    "source_url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Wooden_Chair.jpg"
+  },
+  {
+    "image_path": "/content/drive/MyDrive/intership/MME/open_book.jpg",
+    "prompt": "Is the book in the image open or closed?",
+    "source_url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Open_book_1_%28Unsplash%29.jpg"
+  },
+  {
+    "image_path": "/content/drive/MyDrive/intership/MME/bridge.jpg",
+    "prompt": "What type of structure spans the scene?",
+    "source_url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/The_original_Archway_Bridge.jpg"
+  },
+  {
+    "image_path": "/content/drive/MyDrive/intership/MME/moon.jpg",
+    "prompt": "What celestial object is visible in the sky?",
+    "source_url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Moon.jpg"
   }
 ]
