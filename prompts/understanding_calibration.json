@@ -1,0 +1,27 @@
+[
+  {
+    "image_path": "/content/drive/MyDrive/intership/MME/golden_retriever.jpg",
+    "prompt": "What breed of dog is shown in the image?",
+    "source_url": "https://upload.wikimedia.org/wikipedia/commons/4/47/Golden_retriever.jpg"
+  },
+  {
+    "image_path": "/content/drive/MyDrive/intership/MME/red_car.jpg",
+    "prompt": "What color is the car in the image?",
+    "source_url": "https://upload.wikimedia.org/wikipedia/commons/b/b4/RedCar.jpg"
+  },
+  {
+    "image_path": "/content/drive/MyDrive/intership/MME/fruit_bowl.jpg",
+    "prompt": "Name two fruits visible in the bowl.",
+    "source_url": "https://upload.wikimedia.org/wikipedia/commons/5/58/Fruit_bowl.jpg"
+  },
+  {
+    "image_path": "/content/drive/MyDrive/intership/MME/eiffel_tower.jpg",
+    "prompt": "Which famous landmark is visible in the image?",
+    "source_url": "https://upload.wikimedia.org/wikipedia/commons/d/dd/Eiffel_Tower_at_sunrise.jpg"
+  },
+  {
+    "image_path": "/content/drive/MyDrive/intership/MME/cat_window.jpg",
+    "prompt": "Where is the cat positioned in the image?",
+    "source_url": "https://upload.wikimedia.org/wikipedia/commons/c/cf/Cat_looking_through_window.jpg"
+  }
+]
