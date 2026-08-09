@@ -74,7 +74,6 @@ def plot_comparison(results, output_file):
     ax.set_yticks(layers)
     ax.set_xlabel("Percentage of Key FFN Neurons (%)")
     ax.set_ylabel("FFN Layer Index")
-    ax.set_title("Task-Specific FFN Neuron Analysis")
     ax.legend(loc="lower center", bbox_to_anchor=(0.5, 1.01), ncol=3, fontsize=8)
     fig.tight_layout()
 
