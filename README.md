@@ -112,12 +112,31 @@ remove_flashu_patch(model)  # Restores original forward passes
 
 ## 🔬 Analysis Tools
 
-### OBD Importance Score Computation
+### OBD Importance Score Computation — Generation
 
 ```bash
 python -m evaluation.calculate_obd_cache_new \
     config=configs/showo2_1.5b_demo_432x432.yaml \
-    num_prompts=20
+    validation_prompts_file=prompts/custom_prompts_20.json \
+    start_sample_index=0 \
+    num_prompts=20 \
+    batch_size=4 \
+    log_dir=logs_obd_cache
+```
+
+### OBD Importance Score Computation — Understanding
+
+The understanding data file must contain JSON records with `image_path` and
+`prompt` fields.
+
+```bash
+python -m evaluation.calculate_obd_cache_understanding \
+    config=configs/showo2_1.5b_demo_432x432.yaml \
+    understanding_data_file=prompts/understanding_calibration.json \
+    start_sample_index=0 \
+    num_prompts=5 \
+    batch_size=1 \
+    log_dir=logs_obd_cache
 ```
 
 ### Importance Score Visualization
