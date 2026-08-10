@@ -1,0 +1,122 @@
+[
+  {
+    "image_path": "/content/drive/MyDrive/intership/EXPERIMENT-UNDERSTANDING/spatial_relations/spatial_01_dog_left_of_hydrant.jpg",
+    "prompt": "Where is the dog relative to the fire hydrant?",
+    "expected_answer": "left",
+    "source_url": "http://images.cocodataset.org/val2017/000000224200.jpg"
+  },
+  {
+    "image_path": "/content/drive/MyDrive/intership/EXPERIMENT-UNDERSTANDING/spatial_relations/spatial_02_motorcycle_left_of_person.jpg",
+    "prompt": "Where is the motorcycle relative to the person?",
+    "expected_answer": "left",
+    "source_url": "http://images.cocodataset.org/val2017/000000013177.jpg"
+  },
+  {
+    "image_path": "/content/drive/MyDrive/intership/EXPERIMENT-UNDERSTANDING/spatial_relations/spatial_03_person_left_of_cat.jpg",
+    "prompt": "Where is the person relative to the cat?",
+    "expected_answer": "left",
+    "source_url": "http://images.cocodataset.org/val2017/000000117908.jpg"
+  },
+  {
+    "image_path": "/content/drive/MyDrive/intership/EXPERIMENT-UNDERSTANDING/spatial_relations/spatial_04_bicycle_left_of_person.jpg",
+    "prompt": "Where is the bicycle relative to the person?",
+    "expected_answer": "left",
+    "source_url": "http://images.cocodataset.org/val2017/000000076547.jpg"
+  },
+  {
+    "image_path": "/content/drive/MyDrive/intership/EXPERIMENT-UNDERSTANDING/spatial_relations/spatial_05_dog_left_of_cat.jpg",
+    "prompt": "Where is the dog relative to the cat?",
+    "expected_answer": "left",
+    "source_url": "http://images.cocodataset.org/val2017/000000022892.jpg"
+  },
+  {
+    "image_path": "/content/drive/MyDrive/intership/EXPERIMENT-UNDERSTANDING/spatial_relations/spatial_06_person_right_of_motorcycle.jpg",
+    "prompt": "Where is the person relative to the motorcycle?",
+    "expected_answer": "right",
+    "source_url": "http://images.cocodataset.org/val2017/000000394199.jpg"
+  },
+  {
+    "image_path": "/content/drive/MyDrive/intership/EXPERIMENT-UNDERSTANDING/spatial_relations/spatial_07_cat_right_of_bottle.jpg",
+    "prompt": "Where is the cat relative to the bottle?",
+    "expected_answer": "right",
+    "source_url": "http://images.cocodataset.org/val2017/000000047121.jpg"
+  },
+  {
+    "image_path": "/content/drive/MyDrive/intership/EXPERIMENT-UNDERSTANDING/spatial_relations/spatial_08_dog_right_of_bench.jpg",
+    "prompt": "Where is the dog relative to the bench?",
+    "expected_answer": "right",
+    "source_url": "http://images.cocodataset.org/val2017/000000261161.jpg"
+  },
+  {
+    "image_path": "/content/drive/MyDrive/intership/EXPERIMENT-UNDERSTANDING/spatial_relations/spatial_09_cup_right_of_bottle.jpg",
+    "prompt": "Where is the cup relative to the bottle?",
+    "expected_answer": "right",
+    "source_url": "http://images.cocodataset.org/val2017/000000536073.jpg"
+  },
+  {
+    "image_path": "/content/drive/MyDrive/intership/EXPERIMENT-UNDERSTANDING/spatial_relations/spatial_10_car_right_of_motorcycle.jpg",
+    "prompt": "Where is the car relative to the motorcycle?",
+    "expected_answer": "right",
+    "source_url": "http://images.cocodataset.org/val2017/000000230008.jpg"
+  },
+  {
+    "image_path": "/content/drive/MyDrive/intership/EXPERIMENT-UNDERSTANDING/spatial_relations/spatial_11_cat_above_suitcase.jpg",
+    "prompt": "Where is the cat relative to the suitcase?",
+    "expected_answer": "above",
+    "source_url": "http://images.cocodataset.org/val2017/000000432468.jpg"
+  },
+  {
+    "image_path": "/content/drive/MyDrive/intership/EXPERIMENT-UNDERSTANDING/spatial_relations/spatial_12_umbrella_above_person.jpg",
+    "prompt": "Where is the umbrella relative to the person?",
+    "expected_answer": "above",
+    "source_url": "http://images.cocodataset.org/val2017/000000339823.jpg"
+  },
+  {
+    "image_path": "/content/drive/MyDrive/intership/EXPERIMENT-UNDERSTANDING/spatial_relations/spatial_13_traffic_light_above_car.jpg",
+    "prompt": "Where is the traffic light relative to the car?",
+    "expected_answer": "above",
+    "source_url": "http://images.cocodataset.org/val2017/000000215723.jpg"
+  },
+  {
+    "image_path": "/content/drive/MyDrive/intership/EXPERIMENT-UNDERSTANDING/spatial_relations/spatial_14_person_above_skateboard.jpg",
+    "prompt": "Where is the person relative to the skateboard?",
+    "expected_answer": "above",
+    "source_url": "http://images.cocodataset.org/val2017/000000180135.jpg"
+  },
+  {
+    "image_path": "/content/drive/MyDrive/intership/EXPERIMENT-UNDERSTANDING/spatial_relations/spatial_15_person_above_cat.jpg",
+    "prompt": "Where is the person relative to the cat?",
+    "expected_answer": "above",
+    "source_url": "http://images.cocodataset.org/val2017/000000515025.jpg"
+  },
+  {
+    "image_path": "/content/drive/MyDrive/intership/EXPERIMENT-UNDERSTANDING/spatial_relations/spatial_16_surfboard_below_person.jpg",
+    "prompt": "Where is the surfboard relative to the person?",
+    "expected_answer": "below",
+    "source_url": "http://images.cocodataset.org/val2017/000000079031.jpg"
+  },
+  {
+    "image_path": "/content/drive/MyDrive/intership/EXPERIMENT-UNDERSTANDING/spatial_relations/spatial_17_cat_below_bench.jpg",
+    "prompt": "Where is the cat relative to the bench?",
+    "expected_answer": "below",
+    "source_url": "http://images.cocodataset.org/val2017/000000320554.jpg"
+  },
+  {
+    "image_path": "/content/drive/MyDrive/intership/EXPERIMENT-UNDERSTANDING/spatial_relations/spatial_18_skateboard_below_person.jpg",
+    "prompt": "Where is the skateboard relative to the person?",
+    "expected_answer": "below",
+    "source_url": "http://images.cocodataset.org/val2017/000000489924.jpg"
+  },
+  {
+    "image_path": "/content/drive/MyDrive/intership/EXPERIMENT-UNDERSTANDING/spatial_relations/spatial_19_suitcase_below_person.jpg",
+    "prompt": "Where is the suitcase relative to the person?",
+    "expected_answer": "below",
+    "source_url": "http://images.cocodataset.org/val2017/000000350019.jpg"
+  },
+  {
+    "image_path": "/content/drive/MyDrive/intership/EXPERIMENT-UNDERSTANDING/spatial_relations/spatial_20_bench_below_person.jpg",
+    "prompt": "Where is the bench relative to the person?",
+    "expected_answer": "below",
+    "source_url": "http://images.cocodataset.org/val2017/000000566436.jpg"
+  }
+]

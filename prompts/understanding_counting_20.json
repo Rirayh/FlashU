@@ -1,0 +1,122 @@
+[
+  {
+    "image_path": "/content/drive/MyDrive/intership/EXPERIMENT-UNDERSTANDING/counting/counting_01_one_dog.jpg",
+    "prompt": "How many dogs are there?",
+    "expected_answer": "one",
+    "source_url": "http://images.cocodataset.org/val2017/000000181969.jpg"
+  },
+  {
+    "image_path": "/content/drive/MyDrive/intership/EXPERIMENT-UNDERSTANDING/counting/counting_02_one_bear.jpg",
+    "prompt": "How many bears are there?",
+    "expected_answer": "one",
+    "source_url": "http://images.cocodataset.org/val2017/000000000285.jpg"
+  },
+  {
+    "image_path": "/content/drive/MyDrive/intership/EXPERIMENT-UNDERSTANDING/counting/counting_03_one_elephant.jpg",
+    "prompt": "How many elephants are there?",
+    "expected_answer": "one",
+    "source_url": "http://images.cocodataset.org/val2017/000000519208.jpg"
+  },
+  {
+    "image_path": "/content/drive/MyDrive/intership/EXPERIMENT-UNDERSTANDING/counting/counting_04_one_train.jpg",
+    "prompt": "How many trains are there?",
+    "expected_answer": "one",
+    "source_url": "http://images.cocodataset.org/val2017/000000482978.jpg"
+  },
+  {
+    "image_path": "/content/drive/MyDrive/intership/EXPERIMENT-UNDERSTANDING/counting/counting_05_one_cat.jpg",
+    "prompt": "How many cats are there?",
+    "expected_answer": "one",
+    "source_url": "http://images.cocodataset.org/val2017/000000524280.jpg"
+  },
+  {
+    "image_path": "/content/drive/MyDrive/intership/EXPERIMENT-UNDERSTANDING/counting/counting_06_two_zebras.jpg",
+    "prompt": "How many zebras are there?",
+    "expected_answer": "two",
+    "source_url": "http://images.cocodataset.org/val2017/000000038825.jpg"
+  },
+  {
+    "image_path": "/content/drive/MyDrive/intership/EXPERIMENT-UNDERSTANDING/counting/counting_07_two_elephants.jpg",
+    "prompt": "How many elephants are there?",
+    "expected_answer": "two",
+    "source_url": "http://images.cocodataset.org/val2017/000000359135.jpg"
+  },
+  {
+    "image_path": "/content/drive/MyDrive/intership/EXPERIMENT-UNDERSTANDING/counting/counting_08_two_cows.jpg",
+    "prompt": "How many cows are there?",
+    "expected_answer": "two",
+    "source_url": "http://images.cocodataset.org/val2017/000000125806.jpg"
+  },
+  {
+    "image_path": "/content/drive/MyDrive/intership/EXPERIMENT-UNDERSTANDING/counting/counting_09_two_giraffes.jpg",
+    "prompt": "How many giraffes are there?",
+    "expected_answer": "two",
+    "source_url": "http://images.cocodataset.org/val2017/000000448448.jpg"
+  },
+  {
+    "image_path": "/content/drive/MyDrive/intership/EXPERIMENT-UNDERSTANDING/counting/counting_10_two_bears.jpg",
+    "prompt": "How many bears are there?",
+    "expected_answer": "two",
+    "source_url": "http://images.cocodataset.org/val2017/000000127955.jpg"
+  },
+  {
+    "image_path": "/content/drive/MyDrive/intership/EXPERIMENT-UNDERSTANDING/counting/counting_11_three_oranges.jpg",
+    "prompt": "How many oranges are there?",
+    "expected_answer": "three",
+    "source_url": "http://images.cocodataset.org/val2017/000000189078.jpg"
+  },
+  {
+    "image_path": "/content/drive/MyDrive/intership/EXPERIMENT-UNDERSTANDING/counting/counting_12_three_elephants.jpg",
+    "prompt": "How many elephants are there?",
+    "expected_answer": "three",
+    "source_url": "http://images.cocodataset.org/val2017/000000170739.jpg"
+  },
+  {
+    "image_path": "/content/drive/MyDrive/intership/EXPERIMENT-UNDERSTANDING/counting/counting_13_three_zebras.jpg",
+    "prompt": "How many zebras are there?",
+    "expected_answer": "three",
+    "source_url": "http://images.cocodataset.org/val2017/000000085823.jpg"
+  },
+  {
+    "image_path": "/content/drive/MyDrive/intership/EXPERIMENT-UNDERSTANDING/counting/counting_14_three_bears.jpg",
+    "prompt": "How many bears are there?",
+    "expected_answer": "three",
+    "source_url": "http://images.cocodataset.org/val2017/000000217948.jpg"
+  },
+  {
+    "image_path": "/content/drive/MyDrive/intership/EXPERIMENT-UNDERSTANDING/counting/counting_15_three_buses.jpg",
+    "prompt": "How many buses are there?",
+    "expected_answer": "three",
+    "source_url": "http://images.cocodataset.org/val2017/000000171298.jpg"
+  },
+  {
+    "image_path": "/content/drive/MyDrive/intership/EXPERIMENT-UNDERSTANDING/counting/counting_16_four_elephants.jpg",
+    "prompt": "How many elephants are there?",
+    "expected_answer": "four",
+    "source_url": "http://images.cocodataset.org/val2017/000000057027.jpg"
+  },
+  {
+    "image_path": "/content/drive/MyDrive/intership/EXPERIMENT-UNDERSTANDING/counting/counting_17_four_cows.jpg",
+    "prompt": "How many cows are there?",
+    "expected_answer": "four",
+    "source_url": "http://images.cocodataset.org/val2017/000000416758.jpg"
+  },
+  {
+    "image_path": "/content/drive/MyDrive/intership/EXPERIMENT-UNDERSTANDING/counting/counting_18_four_bottles.jpg",
+    "prompt": "How many bottles are there?",
+    "expected_answer": "four",
+    "source_url": "http://images.cocodataset.org/val2017/000000206027.jpg"
+  },
+  {
+    "image_path": "/content/drive/MyDrive/intership/EXPERIMENT-UNDERSTANDING/counting/counting_19_four_horses.jpg",
+    "prompt": "How many horses are there?",
+    "expected_answer": "four",
+    "source_url": "http://images.cocodataset.org/val2017/000000051309.jpg"
+  },
+  {
+    "image_path": "/content/drive/MyDrive/intership/EXPERIMENT-UNDERSTANDING/counting/counting_20_four_giraffes.jpg",
+    "prompt": "How many giraffes are there?",
+    "expected_answer": "four",
+    "source_url": "http://images.cocodataset.org/val2017/000000286849.jpg"
+  }
+]
